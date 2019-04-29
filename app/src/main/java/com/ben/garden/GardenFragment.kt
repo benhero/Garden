@@ -17,23 +17,18 @@ class GardenFragment : Fragment() {
     private lateinit var viewModel: GardenViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        viewModel = ViewModelProviders.of(this.activity!!).get(GardenViewModel::class.java)
         val binding = GardenFragmentBinding.inflate(inflater, container, false)
         val adapter = GardenPlanListAdapter()
         val arguments = arguments
         if (arguments != null) {
             val arg = GardenFragmentArgs.fromBundle(arguments)
             val plant = arg.plant
-            adapter.plants = listOf(plant!!)
+            viewModel.buyPlant(plant!!)
+            adapter.plants = viewModel.getPlantList()
             binding.gardenPlantList.adapter = adapter
-            Log.i("JKL", "onCreateView: $plant")
         }
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(GardenViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
