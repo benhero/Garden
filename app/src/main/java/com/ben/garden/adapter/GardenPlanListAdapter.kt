@@ -25,8 +25,8 @@ class GardenPlanListAdapter : RecyclerView.Adapter<GardenPlanListAdapter.ViewHol
         holder.binding.plant = plant
         holder.binding.imageView.setImageResource(plant.imgId)
         holder.binding.root.setOnClickListener {
-//            val bundle = PlantFragmentArgs(plant)
-//            Navigation.findNavController(it).navigate(R.id.action_marketFragment_to_plantFragment, bundle.toBundle())
+            val bundle = PlantFragmentArgs(plant)
+            Navigation.findNavController(it).navigate(R.id.action_gardenFragment_to_plantFragment, bundle.toBundle())
         }
     }
 

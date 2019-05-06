@@ -11,12 +11,24 @@ class GardenViewModel : ViewModel() {
     }
 
     fun buyPlant(plant: Plant) {
-        val value = list.value
-        value?.add(plant)
+        if (isHadBuy(plant)) {
+            return
+        }
+        list.value?.add(plant)
     }
 
     fun getPlantList(): List<Plant> {
         return list.value!!.toList()
+    }
+
+    fun isHadBuy(plant: Plant): Boolean {
+        val value = list.value
+        value?.forEach { it ->
+            if (it.name == plant.name) {
+                return true
+            }
+        }
+        return false
     }
 
 }

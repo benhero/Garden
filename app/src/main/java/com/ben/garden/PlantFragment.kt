@@ -1,16 +1,20 @@
 package com.ben.garden
 
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.ben.garden.data.Plant
 import com.ben.garden.databinding.PlantFragmentBinding
+import com.ben.garden.model.GardenViewModel
 import kotlinx.android.synthetic.main.plant_fragment.view.*
 
 /**
@@ -20,8 +24,10 @@ import kotlinx.android.synthetic.main.plant_fragment.view.*
 class PlantFragment : Fragment(), View.OnClickListener {
     private lateinit var plant: Plant
     private val arg: PlantFragmentArgs by navArgs()
+    private lateinit var viewModel: GardenViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        viewModel = ViewModelProviders.of(this.activity!!).get(GardenViewModel::class.java)
         val binding = PlantFragmentBinding.inflate(inflater, container, false)
         Log.i("JKL", "onCreateView: ${arg.plant}")
         plant = arg.plant
@@ -33,6 +39,9 @@ class PlantFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         view.plant_img.setImageResource(plant.imgId)
         view.fab.setOnClickListener(this)
+        if (viewModel.isHadBuy(plant)) {
+            view.fab.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -48,6 +57,4 @@ class PlantFragment : Fragment(), View.OnClickListener {
             }
         }
     }
-
-
 }
