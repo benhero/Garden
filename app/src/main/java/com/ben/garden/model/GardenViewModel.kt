@@ -7,7 +7,7 @@ import com.ben.garden.data.Plant
 class GardenViewModel : ViewModel() {
     private val list = MutableLiveData<MutableList<Plant>>()
     init {
-        list.value = mutableListOf()
+        list.value = arrayListOf()
     }
 
     fun buyPlant(plant: Plant) {

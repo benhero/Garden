@@ -2,14 +2,32 @@ package com.ben.garden.data
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class Plant(val name: String, val imgId: Int) : Parcelable {
+@Entity(tableName = "plants")
+data class Plant(
+    @PrimaryKey @ColumnInfo(name = "id") val plantId: String,
+    val name: String,
+    val description: String,
+    val growZoneNumber: Int,
+    val wateringInterval: Int = 7, // how often the plant should be watered, in days
+    val imageUrl: String = ""
+) : Parcelable {
 
-    constructor(parcel: Parcel) : this(parcel.readString()!!, parcel.readInt())
+    constructor(parcel: Parcel) : this(
+        parcel.readString()!!, parcel.readString()!!, parcel.readString()!!,
+        parcel.readInt(), parcel.readInt(), parcel.readString()!!
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(plantId)
         parcel.writeString(name)
-        parcel.writeInt(imgId)
+        parcel.writeString(description)
+        parcel.writeInt(growZoneNumber)
+        parcel.writeInt(wateringInterval)
+        parcel.writeString(imageUrl)
     }
 
     override fun describeContents(): Int {

@@ -1,5 +1,6 @@
 package com.ben.garden.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
@@ -8,9 +9,11 @@ import com.ben.garden.PlantFragmentArgs
 import com.ben.garden.R
 import com.ben.garden.data.Plant
 import com.ben.garden.databinding.MarketPlantListItemBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class MarketPlanListAdapter : RecyclerView.Adapter<MarketPlanListAdapter.ViewHolder>() {
-    lateinit var plants: List<Plant>
+    var plants: List<Plant> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(MarketPlantListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -22,12 +25,15 @@ class MarketPlanListAdapter : RecyclerView.Adapter<MarketPlanListAdapter.ViewHol
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val plant = plants[position]
+        Log.i("JKL", "onBindViewHolder: $plant")
         holder.binding.plant = plant
-        holder.binding.imageView.setImageResource(plant.imgId)
+//        holder.binding.imageView.setImageResource(plant.imgId)
         holder.binding.root.setOnClickListener {
             val bundle = PlantFragmentArgs(plant)
             Navigation.findNavController(it).navigate(R.id.action_marketFragment_to_plantFragment, bundle.toBundle())
         }
+        Glide.with(holder.binding.imageView.context).load(plant.imageUrl).transition(DrawableTransitionOptions.withCrossFade())
+            .into(holder.binding.imageView)
     }
 
     class ViewHolder(val binding: MarketPlantListItemBinding) : RecyclerView.ViewHolder(binding.root) {

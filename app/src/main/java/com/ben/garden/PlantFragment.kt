@@ -4,10 +4,10 @@ package com.ben.garden
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -15,6 +15,8 @@ import androidx.navigation.fragment.navArgs
 import com.ben.garden.data.Plant
 import com.ben.garden.databinding.PlantFragmentBinding
 import com.ben.garden.model.GardenViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kotlinx.android.synthetic.main.plant_fragment.view.*
 
 /**
@@ -29,7 +31,6 @@ class PlantFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(this.activity!!).get(GardenViewModel::class.java)
         val binding = PlantFragmentBinding.inflate(inflater, container, false)
-        Log.i("JKL", "onCreateView: ${arg.plant}")
         plant = arg.plant
         binding.plant = plant
         return binding.root
@@ -37,11 +38,14 @@ class PlantFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.plant_img.setImageResource(plant.imgId)
+        Glide.with(this).load(plant.imageUrl)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(view.plant_img)
         view.fab.setOnClickListener(this)
         if (viewModel.isHadBuy(plant)) {
             view.fab.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
         }
+        view.plant_detail.text = HtmlCompat.fromHtml(plant.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

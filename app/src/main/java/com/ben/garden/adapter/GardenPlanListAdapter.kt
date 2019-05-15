@@ -1,5 +1,6 @@
 package com.ben.garden.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
@@ -8,6 +9,8 @@ import com.ben.garden.PlantFragmentArgs
 import com.ben.garden.R
 import com.ben.garden.data.Plant
 import com.ben.garden.databinding.GardenPlantListItemBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class GardenPlanListAdapter : RecyclerView.Adapter<GardenPlanListAdapter.ViewHolder>() {
     lateinit var plants: List<Plant>
@@ -23,7 +26,9 @@ class GardenPlanListAdapter : RecyclerView.Adapter<GardenPlanListAdapter.ViewHol
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val plant = plants[position]
         holder.binding.plant = plant
-        holder.binding.imageView.setImageResource(plant.imgId)
+        Glide.with(holder.binding.imageView.context).load(plant.imageUrl)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(holder.binding.imageView)
         holder.binding.root.setOnClickListener {
             val bundle = PlantFragmentArgs(plant)
             Navigation.findNavController(it).navigate(R.id.action_gardenFragment_to_plantFragment, bundle.toBundle())
