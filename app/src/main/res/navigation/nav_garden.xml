@@ -4,19 +4,19 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_garden"
             app:startDestination="@id/gardenFragment">
     <fragment android:id="@+id/gardenFragment" android:name="com.ben.garden.GardenFragment"
-              android:label="garden_fragment" tools:layout="@layout/garden_fragment">
+              android:label="Garden" tools:layout="@layout/garden_fragment">
         <argument android:name="plant" app:argType="com.ben.garden.data.Plant" app:nullable="true"/>
         <action android:id="@+id/action_gardenFragment_to_marketFragment" app:destination="@id/marketFragment"
         />
         <action android:id="@+id/action_gardenFragment_to_plantFragment" app:destination="@id/plantFragment"/>
     </fragment>
     <fragment android:id="@+id/marketFragment" android:name="com.ben.garden.MarketFragment"
-              android:label="market_fragment" tools:layout="@layout/market_fragment">
+              android:label="Market" tools:layout="@layout/market_fragment">
         <action android:id="@+id/action_marketFragment_to_plantFragment" app:destination="@id/plantFragment"
         />
     </fragment>
     <fragment android:id="@+id/plantFragment" android:name="com.ben.garden.PlantFragment"
-              android:label="PlantFragment" tools:layout="@layout/plant_fragment">
+              android:label="Plant" tools:layout="@layout/plant_fragment">
         <argument android:name="plant" app:argType="com.ben.garden.data.Plant"/>
         <action android:id="@+id/action_plantFragment_to_gardenFragment"
                 app:popUpToInclusive="true"
