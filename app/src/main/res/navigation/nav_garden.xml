@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_garden"
-            app:startDestination="@id/gardenFragment">
-    <fragment android:id="@+id/gardenFragment" android:name="com.ben.garden.GardenFragment"
-              android:label="Garden" tools:layout="@layout/garden_fragment">
-        <argument android:name="plant" app:argType="com.ben.garden.data.Plant" app:nullable="true"/>
-        <action android:id="@+id/action_gardenFragment_to_marketFragment" app:destination="@id/marketFragment"
-        />
-        <action android:id="@+id/action_gardenFragment_to_plantFragment" app:destination="@id/plantFragment"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_garden"
+    app:startDestination="@id/gardenFragment">
+    <fragment
+        android:id="@+id/gardenFragment"
+        android:name="com.ben.garden.GardenFragment"
+        android:label="Garden"
+        tools:layout="@layout/garden_fragment">
+        <action
+            android:id="@+id/action_gardenFragment_to_marketFragment"
+            app:destination="@id/marketFragment" />
+        <action
+            android:id="@+id/action_gardenFragment_to_plantFragment"
+            app:destination="@id/plantFragment" />
     </fragment>
-    <fragment android:id="@+id/marketFragment" android:name="com.ben.garden.MarketFragment"
-              android:label="Market" tools:layout="@layout/market_fragment">
-        <action android:id="@+id/action_marketFragment_to_plantFragment" app:destination="@id/plantFragment"
-        />
+    <fragment
+        android:id="@+id/marketFragment"
+        android:name="com.ben.garden.MarketFragment"
+        android:label="Market"
+        tools:layout="@layout/market_fragment">
+        <action
+            android:id="@+id/action_marketFragment_to_plantFragment"
+            app:destination="@id/plantFragment" />
     </fragment>
-    <fragment android:id="@+id/plantFragment" android:name="com.ben.garden.PlantFragment"
-              android:label="Plant" tools:layout="@layout/plant_fragment">
-        <argument android:name="plant" app:argType="com.ben.garden.data.Plant"/>
-        <action android:id="@+id/action_plantFragment_to_gardenFragment"
-                app:popUpToInclusive="true"
-                app:destination="@id/gardenFragment"
-                app:popUpTo="@id/gardenFragment" app:launchSingleTop="true"/>
+    <fragment
+        android:id="@+id/plantFragment"
+        android:name="com.ben.garden.PlantFragment"
+        android:label="Plant"
+        tools:layout="@layout/plant_fragment">
+        <argument
+            android:name="plant"
+            app:argType="com.ben.garden.data.Plant" />
+        <action
+            android:id="@+id/action_plantFragment_to_gardenFragment"
+            app:destination="@id/gardenFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/gardenFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

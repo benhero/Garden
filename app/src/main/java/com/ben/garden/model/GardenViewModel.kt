@@ -1,34 +1,32 @@
 package com.ben.garden.model
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import com.ben.garden.data.AppDatabase
 import com.ben.garden.data.Plant
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class GardenViewModel : ViewModel() {
-    private val list = MutableLiveData<MutableList<Plant>>()
-    init {
-        list.value = arrayListOf()
-    }
+class GardenViewModel(application: Application) : AndroidViewModel(application) {
+    val list: LiveData<List<Plant>> = AppDatabase.getInstance(application).getPlantDao().getBoughtPlants()
 
     fun buyPlant(plant: Plant) {
-        if (isHadBuy(plant)) {
+        if (plant.isBought) {
             return
         }
-        list.value?.add(plant)
-    }
-
-    fun getPlantList(): List<Plant> {
-        return list.value!!.toList()
-    }
-
-    fun isHadBuy(plant: Plant): Boolean {
-        val value = list.value
-        value?.forEach { it ->
-            if (it.name == plant.name) {
-                return true
-            }
+        plant.isBought = true
+        plant.buyTime = System.currentTimeMillis()
+        viewModelScope.launch(Dispatchers.IO) {
+            AppDatabase.getInstance(getApplication()).getPlantDao().buyPlant(plant)
         }
-        return false
     }
 
+    fun isHadBought(plant: Plant): Boolean {
+        val value = list.value
+        return value?.any {
+            it.name == plant.name
+        } == true
+    }
 }

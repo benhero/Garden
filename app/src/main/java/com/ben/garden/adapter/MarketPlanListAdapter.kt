@@ -1,6 +1,5 @@
 package com.ben.garden.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
@@ -25,19 +24,15 @@ class MarketPlanListAdapter : RecyclerView.Adapter<MarketPlanListAdapter.ViewHol
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val plant = plants[position]
-        Log.i("JKL", "onBindViewHolder: $plant")
         holder.binding.plant = plant
-//        holder.binding.imageView.setImageResource(plant.imgId)
         holder.binding.root.setOnClickListener {
             val bundle = PlantFragmentArgs(plant)
             Navigation.findNavController(it).navigate(R.id.action_marketFragment_to_plantFragment, bundle.toBundle())
         }
-        Glide.with(holder.binding.imageView.context).load(plant.imageUrl).transition(DrawableTransitionOptions.withCrossFade())
+        Glide.with(holder.binding.imageView.context).load(plant.imageUrl)
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(holder.binding.imageView)
     }
 
-    class ViewHolder(val binding: MarketPlantListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    }
-
+    class ViewHolder(val binding: MarketPlantListItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

@@ -21,7 +21,6 @@ class MarketFragment : Fragment() {
         val planListAdapter = MarketPlanListAdapter()
         viewModel = ViewModelProviders.of(this).get(MarketViewModel::class.java)
         binding.plantList.adapter = planListAdapter
-        binding.plantList.layoutManager = GridLayoutManager(context, 2)
         viewModel.list.observe(this, Observer {
             planListAdapter.plants = it
             planListAdapter.notifyDataSetChanged()

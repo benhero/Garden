@@ -17,10 +17,7 @@
 package com.ben.garden.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 /**
  * The Data Access Object for the Plant class.
@@ -28,7 +25,10 @@ import androidx.room.Query
 @Dao
 interface PlantDao {
     @Query("SELECT * FROM plants")
-    fun  getPlants(): LiveData<List<Plant>>
+    fun getPlants(): LiveData<List<Plant>>
+
+    @Query("SELECT * FROM plants WHERE isBought = '1'")
+    fun getBoughtPlants(): LiveData<List<Plant>>
 
     @Query("SELECT * FROM plants WHERE growZoneNumber = :growZoneNumber ORDER BY name")
     fun getPlantsWithGrowZoneNumber(growZoneNumber: Int): LiveData<List<Plant>>
@@ -38,4 +38,7 @@ interface PlantDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(plants: List<Plant>)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun buyPlant(plant: Plant)
 }

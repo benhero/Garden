@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.plant_fragment.view.*
 
 /**
  * 植物详情页
- *
  */
 class PlantFragment : Fragment(), View.OnClickListener {
     private lateinit var plant: Plant
@@ -42,7 +41,7 @@ class PlantFragment : Fragment(), View.OnClickListener {
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(view.plant_img)
         view.fab.setOnClickListener(this)
-        if (viewModel.isHadBuy(plant)) {
+        if (viewModel.isHadBought(plant)) {
             view.fab.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
         }
         view.plant_detail.text = HtmlCompat.fromHtml(plant.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
@@ -56,8 +55,8 @@ class PlantFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.fab -> {
-                val bundle = GardenFragmentArgs(plant)
-                findNavController().navigate(R.id.action_plantFragment_to_gardenFragment, bundle.toBundle())
+                viewModel.buyPlant(plant)
+                findNavController().navigate(R.id.action_plantFragment_to_gardenFragment)
             }
         }
     }

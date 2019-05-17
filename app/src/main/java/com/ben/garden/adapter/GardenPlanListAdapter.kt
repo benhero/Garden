@@ -1,6 +1,5 @@
 package com.ben.garden.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
@@ -35,8 +34,5 @@ class GardenPlanListAdapter : RecyclerView.Adapter<GardenPlanListAdapter.ViewHol
         }
     }
 
-    class ViewHolder(val binding: GardenPlantListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    }
-
+    class ViewHolder(val binding: GardenPlantListItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

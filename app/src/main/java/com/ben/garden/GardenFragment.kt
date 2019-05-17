@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.ben.garden.adapter.GardenPlanListAdapter
@@ -19,14 +20,10 @@ class GardenFragment : Fragment() {
         viewModel = ViewModelProviders.of(this.activity!!).get(GardenViewModel::class.java)
         val binding = GardenFragmentBinding.inflate(inflater, container, false)
         val adapter = GardenPlanListAdapter()
-        val arguments = arguments
-        if (arguments != null) {
-            val arg = GardenFragmentArgs.fromBundle(arguments)
-            val plant = arg.plant
-            viewModel.buyPlant(plant!!)
-            adapter.plants = viewModel.getPlantList()
+        viewModel.list.observe(this, Observer { list ->
+            adapter.plants = list.sortedBy { it.buyTime }
             binding.gardenPlantList.adapter = adapter
-        }
+        })
         return binding.root
     }
 
