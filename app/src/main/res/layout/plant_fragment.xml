@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{plant.name}"
                     android:textColor="#000"
-                    android:textSize="32sp"
+                    app:textSize="@{32}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

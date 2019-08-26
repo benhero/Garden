@@ -29,7 +29,7 @@ class GardenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<View>(R.id.fab).setOnClickListener {
+        view.findViewById<View>(R.id.garden_fab).setOnClickListener {
             findNavController().navigate(R.id.action_gardenFragment_to_marketFragment)
         }
     }
