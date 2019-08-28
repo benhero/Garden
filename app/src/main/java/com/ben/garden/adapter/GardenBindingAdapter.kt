@@ -6,5 +6,4 @@ import androidx.databinding.BindingAdapter
 @BindingAdapter("textSize")
 fun updateTextSize(view: TextView, size: Int) {
     view.textSize = size.toFloat()
-
 }
